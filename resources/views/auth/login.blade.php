@@ -17,7 +17,7 @@
             @csrf
 
             <select name="role" required>
-                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Login sebagai Admin</option>
+                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Login sebagai Admiiin</option>
                 <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Login sebagai User</option>
             </select>
 
