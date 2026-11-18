@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\EkspedisiController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/vouchers');
@@ -12,11 +13,25 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/vouchers', [VoucherController::class, 'index'])->name('vouchers.index');
+    // VOUCHER
+    Route::get('/vouchers', [VoucherController::class, 'index'])
+        ->name('vouchers.index');
 
     Route::middleware('role:admin')->group(function () {
-        Route::resource('vouchers', VoucherController::class)->except(['index', 'show']);
+        Route::resource('vouchers', VoucherController::class)
+            ->except(['index', 'show']);
     });
+
+    // EKSPEDISI
+    Route::get('/ekspedisi', [EkspedisiController::class, 'index'])
+        ->name('ekspedisi.index');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('ekspedisi', EkspedisiController::class)
+            ->except(['index', 'show']);
+    });
+
 });
