@@ -23,7 +23,7 @@ class AuthController extends Controller
         // email + password + role harus cocok semua dengan data di tabel users
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('vouchers.index');
+            return redirect()->route('ekspedisi.index');
         }
 
         return back()
