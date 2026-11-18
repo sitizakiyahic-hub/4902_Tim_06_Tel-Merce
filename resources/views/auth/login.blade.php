@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body>
-
     <div class="auth-wrapper">
         <div class="auth-card">
             <div class="auth-header">
@@ -63,6 +62,5 @@
             </form>
         </div>
     </div>
-
 </body>
 </html>
