@@ -19,6 +19,10 @@
     --danger-border: #fecaca;
     --danger-hover: #991b1b;
 
+    --success: #15803d;
+    --success-bg: #f0fdf4;
+    --success-border: #bbf7d0;
+
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: 8px;
@@ -79,13 +83,17 @@ body {
 }
 
 /* App Main Layout */
-.app-container {
+.app-container, .container {
     max-width: 1040px;
     margin: 0 auto;
     padding: 32px 20px;
 }
 
-.topbar {
+.kecil {
+    max-width: 580px;
+}
+
+.topbar, .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -187,9 +195,27 @@ body {
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236f6687' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
 .form-control:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(109, 69, 197, 0.12);
+}
+
+.form-control:disabled,
+.form-control[disabled] {
+    background-color: #f7f5fa;
+    color: var(--text-muted);
+    cursor: not-allowed;
+    border-color: var(--border-color);
 }
 
 .form-control::placeholder {
@@ -303,6 +329,7 @@ body {
     padding: 13px 16px;
     border-bottom: 1px solid var(--border-light);
     color: var(--text-main);
+    vertical-align: middle;
 }
 
 .table tbody tr:hover {
@@ -321,6 +348,7 @@ body {
     padding: 2px 7px;
     border-radius: var(--radius-sm);
     font-size: 13px;
+    display: inline-block;
 }
 
 .action-buttons {
@@ -338,12 +366,19 @@ body {
     border-radius: var(--radius-md);
     font-size: 13px;
     margin-bottom: 18px;
+    line-height: 1.4;
 }
 
 .alert-danger {
     background-color: var(--danger-bg);
     border: 1px solid var(--danger-border);
     color: var(--danger);
+}
+
+.alert-success {
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: var(--success);
 }
 
 .empty-state {
@@ -358,11 +393,11 @@ body {
 }
 
 @media (max-width: 640px) {
-    .app-container {
+    .app-container, .container {
         padding: 16px 12px;
     }
 
-    .topbar {
+    .topbar, .header {
         flex-direction: column;
         align-items: flex-start;
         padding: 16px;
@@ -378,4 +413,316 @@ body {
     .card {
         padding: 16px;
     }
+
+    .form-card {
+        margin: 16px auto;
+    }
 }
+
+
+/* ========================================
+   LAYOUT UTAMA TEL-MERCE
+======================================== */
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-page);
+}
+
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: #fff;
+    border-right: 1px solid var(--border-color);
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 30px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.sidebar-brand h2 {
+    color: var(--primary);
+    font-size: 20px;
+    margin: 0;
+}
+
+.sidebar-brand p {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin: 3px 0 0;
+}
+
+.sidebar-menu {
+    padding-top: 25px;
+    flex: 1;
+}
+
+.menu-label {
+    color: var(--text-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 18px 10px 10px;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 13px;
+    margin-bottom: 5px;
+    border-radius: 9px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.menu-link span {
+    width: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.menu-link:hover,
+.menu-link.active {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.sidebar-bottom {
+    border-top: 1px solid var(--border-light);
+    padding-top: 18px;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.sidebar-user-info strong {
+    font-size: 12px;
+    color: var(--text-main);
+    overflow-wrap: anywhere;
+}
+
+.sidebar-user-info span {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.sidebar-logout {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: #fff;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    background: #fef2f2;
+}
+
+.main-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.main-header {
+    min-height: 85px;
+    background: #fff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-header h1 {
+    font-size: 20px;
+    color: var(--text-main);
+    margin: 0 0 5px;
+}
+
+.main-header p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.header-role {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.main-content {
+    padding: 28px 30px;
+}
+
+@media (max-width: 768px) {
+    .app-shell {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        padding: 15px;
+    }
+
+    .sidebar-menu {
+        padding-top: 12px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 15px;
+    }
+
+    .main-header {
+        padding: 18px;
+    }
+
+    .main-content {
+        padding: 18px;
+    }
+}
+
+
+/* ========================================
+   NAVIGASI HEADER TEL-MERCE
+======================================== */
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hamburger-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--text-main);
+    font-size: 21px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.home-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border: 1px solid var(--primary-border);
+    border-radius: 9px;
+    color: var(--primary);
+    background: var(--primary-light);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.home-btn:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.home-btn span {
+    font-size: 17px;
+}
+
+/* Sembunyikan sidebar */
+.app-shell.sidebar-hidden .sidebar {
+    display: none;
+}
+
+.app-shell.sidebar-hidden .main-area {
+    width: 100%;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 768px) {
+    .main-header {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .header-left {
+        flex: 1;
+    }
+
+    .header-actions {
+        gap: 7px;
+    }
+
+    .home-btn {
+        padding: 9px 11px;
+    }
+}
+

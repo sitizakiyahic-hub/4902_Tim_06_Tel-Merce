@@ -1,63 +1,121 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ isset($pelanggan) ? 'Edit' : 'Tambah' }} Pelanggan</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #f5f2ff; color: #35245c; }
-        .container { max-width: 650px; margin: auto; background: white; padding: 30px; border-radius: 14px; }
-        h1 { color: #4b2995; }
-        label { display: block; margin: 16px 0 7px; font-weight: bold; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #d8ccef; border-radius: 7px; }
-        button, a { display: inline-block; padding: 11px 17px; border: none; border-radius: 7px; text-decoration: none; cursor: pointer; margin-top: 20px; }
-        button { background: #6d28d9; color: white; }
-        a { background: #eee8ff; color: #4b2995; }
-        .error { color: #b91c1c; font-size: 13px; }
-        .readonly { background: #f5f2ff; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>{{ isset($pelanggan) ? 'Edit Pelanggan' : 'Tambah Pelanggan' }}</h1>
 
-    <form action="{{ isset($pelanggan) ? route('pelanggan.update', $pelanggan->id) : route('pelanggan.store') }}" method="POST">
+@extends('layouts.app')
+
+@section('title', isset($pelanggan) ? 'Edit Pelanggan' : 'Tambah Pelanggan')
+
+@section('page-title', isset($pelanggan) ? 'Edit Pelanggan' : 'Tambah Pelanggan')
+
+@section('page-subtitle', 'Kelola informasi pelanggan Tel-Merce')
+
+@section('content')
+
+<div class="card form-card" style="max-width: 750px;">
+
+    <div class="card-header">
+        <div>
+            <h3>
+                {{ isset($pelanggan) ? 'Form Edit Pelanggan' : 'Form Tambah Pelanggan' }}
+            </h3>
+            <p>
+                {{ isset($pelanggan)
+                    ? 'Perbarui informasi data pelanggan.'
+                    : 'Masukkan informasi pelanggan baru.' }}
+            </p>
+        </div>
+    </div>
+
+    <form action="{{ isset($pelanggan) ? route('pelanggan.update', $pelanggan->id) : route('pelanggan.store') }}"
+          method="POST">
+
         @csrf
+
         @if (isset($pelanggan))
             @method('PUT')
         @endif
 
-        <label>Nama Pelanggan</label>
-        <input type="text" name="nama" value="{{ old('nama', $pelanggan->nama ?? '') }}" required>
-        @error('nama') <div class="error">{{ $message }}</div> @enderror
+        <div class="form-group">
+            <label for="nama">Nama Pelanggan</label>
+            <input type="text"
+                   id="nama"
+                   name="nama"
+                   class="form-control"
+                   value="{{ old('nama', $pelanggan->nama ?? '') }}"
+                   required>
 
-        <label>Email</label>
-        @if (auth()->user()->role === 'admin')
-            <input type="email" name="email" value="{{ old('email', $pelanggan->email ?? '') }}" required>
-            @error('email') <div class="error">{{ $message }}</div> @enderror
-        @else
-            <input type="email" value="{{ $pelanggan->email }}" class="readonly" readonly>
-        @endif
+            @error('nama')
+                <small class="error-message">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <label>Nomor HP</label>
-        <input type="text" name="no_hp" value="{{ old('no_hp', $pelanggan->no_hp ?? '') }}" required>
-        @error('no_hp') <div class="error">{{ $message }}</div> @enderror
+        <div class="form-group">
+            <label for="email">Email</label>
 
-        <label>Jenis Member</label>
-        <select name="member" required>
-            <option value="">Pilih Member</option>
-            @foreach (['Gold', 'Platinum', 'Silver'] as $jenis)
-                <option value="{{ $jenis }}" {{ old('member', $pelanggan->member ?? '') === $jenis ? 'selected' : '' }}>
-                    {{ $jenis }}
-                </option>
-            @endforeach
-        </select>
-        @error('member') <div class="error">{{ $message }}</div> @enderror
+            @if (auth()->user()->role === 'admin')
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-control"
+                       value="{{ old('email', $pelanggan->email ?? '') }}"
+                       required>
 
-        <button type="submit">Simpan</button>
-        <a href="{{ route('pelanggan.index') }}">Kembali</a>
+                @error('email')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
+            @else
+                <input type="email"
+                       id="email"
+                       class="form-control"
+                       value="{{ $pelanggan->email }}"
+                       readonly
+                       style="background: #f5f2ff;">
+                <p class="form-hint">Email tidak dapat diubah.</p>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <label for="no_hp">Nomor HP</label>
+            <input type="text"
+                   id="no_hp"
+                   name="no_hp"
+                   class="form-control"
+                   value="{{ old('no_hp', $pelanggan->no_hp ?? '') }}"
+                   required>
+
+            @error('no_hp')
+                <small class="error-message">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="member">Jenis Member</label>
+            <select id="member" name="member" class="form-control" required>
+                <option value="">Pilih Member</option>
+
+                @foreach (['Gold', 'Platinum', 'Silver'] as $jenis)
+                    <option value="{{ $jenis }}"
+                        {{ old('member', $pelanggan->member ?? '') === $jenis ? 'selected' : '' }}>
+                        {{ $jenis }}
+                    </option>
+                @endforeach
+            </select>
+
+            @error('member')
+                <small class="error-message">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {{ isset($pelanggan) ? 'Simpan Perubahan' : 'Simpan Pelanggan' }}
+            </button>
+
+            <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">
+                Batal
+            </a>
+        </div>
+
     </form>
+
 </div>
-</body>
-</html>
+
+@endsection

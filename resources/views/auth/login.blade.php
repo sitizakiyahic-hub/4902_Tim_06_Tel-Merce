@@ -1,17 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Manajemen Voucher</title>
+    <title>Login - Tel-Merce</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
+
             <div class="auth-header">
-                <h1>Masuk ke Akun</h1>
-                <p>Silakan pilih peran dan masukkan kredensial Anda</p>
+                <h1>Tel-Merce</h1>
+                <p>Selamat datang! Silakan masuk ke akun Anda.</p>
             </div>
 
             @if ($errors->any())
@@ -27,7 +29,7 @@
                     <label for="role">Login Sebagai</label>
                     <select name="role" id="role" class="form-control" required>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Pelanggan</option>
                     </select>
                 </div>
 
@@ -60,6 +62,7 @@
                     Masuk
                 </button>
             </form>
+
         </div>
     </div>
 </body>

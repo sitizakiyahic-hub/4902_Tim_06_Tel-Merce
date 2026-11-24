@@ -20,20 +20,27 @@ class AuthController extends Controller
             'role'     => 'required|in:admin,user',
         ]);
 
-        // email + password + role harus cocok semua dengan data di tabel users
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('ekspedisi.index');
+
+            if (auth()->user()->role === 'admin') {
+                return redirect()->route('dashboard');
+            }
+
+            return redirect()->route('produk.index');
         }
 
         return back()
-            ->withErrors(['email' => 'Email, password, atau peran salah.'])
+            ->withErrors([
+                'email' => 'Email, password, atau peran salah.'
+            ])
             ->onlyInput('email', 'role');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
